@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html ng-app="pApp">
+  <head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body ng-controller="pCtrl">
+    
+    <input placeholder="Filter by # beds" ng-model="search.beds"/>
+    <input placeholder="Filter by city" ng-model="search.location.city"/>
+    
+    <select ng-model="sorting" ng-options="sorting.value as sorting.name for sorting in sortingOptions"></select>
+    <select ng-model="sortDir">
+      <option value="true">Descending</option>
+      <option value="">Ascending</option>
+    </select>
+    
+    <div class="houses" ng-repeat="house in housing | filter: search | filter: rentalChecker(house) | orderBy: sorting : sortDir">
+      <h1 class="centered">{{house.title}}</h1>
+      <ul>
+        <li>Bedrooms: {{house.beds}}</li>
+        <li>Bathrooms: {{house.baths}}</li>
+        <li>For Rent? {{house.rental}}</li>
+        <li>Cost to Rent: {{house.rent | currency}}</li>
+        <li>Cost to Own: {{house.cost | currency}}</li>
+        <li>Location: {{house.location.city}}, {{house.location.state}}</li>
+      </ul>
+    </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.js"></script>
+  <script src="app.js"></script>
+  <script src="mainCtrl.js"></script>
+  </body>
+</html>
